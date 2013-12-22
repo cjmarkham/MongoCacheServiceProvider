@@ -14,7 +14,8 @@
         }
     },
     "require": {
-        "silex/silex": "~1.0"
+        "silex/silex": "~1.0",
+        "moriony/silex-mongo-provider": "*"
     },
     "version" : "0.0.1"
 }
