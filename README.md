@@ -19,7 +19,9 @@ Usage
 
 	$app->register(new MongoCache\MongoCacheServiceProvider());
 
-	$app['mongocache']->set(\MongoCollection $collection, $key, $data);
-	$app['mongocache']->get(\MongoCollection $collection, $key, \Closure $function);
-	$app['mongocache']->delete(\MongoCollection $collection, $key);
-	$app['mongocache']->delete_group(\MongoCollection $collection, $group);
+	$app['mongocache']->collection = $collection;
+
+	$app['mongocache']->set($key, $data);
+	$app['mongocache']->get($key, \Closure $function);
+	$app['mongocache']->delete($key);
+	$app['mongocache']->delete_group($group);
