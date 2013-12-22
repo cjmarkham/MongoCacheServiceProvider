@@ -6,39 +6,41 @@ use Silex\Application;
 
 class MongoCache
 {
-	public function get (MongoCollection $collection, $key, \Closure $function = null)
+	public $collection = null;
+
+	public function get ($key, \Closure $function = null)
 	{
-		$result = $collection->findOne(array(
+		$result = $this->collection->findOne(array(
 			'key' => $key
 		));
 
 		if (empty($result) && $function instanceof \Closure)
 		{
 			$result = $function();
-			$this->set($collection, $key, $result);
+			$this->set($key, $result);
 		}
 
 		return $result;
 	}
 
-	public function set ($collection, $key, $data)
+	public function set ($key, $data)
 	{
-		return $collection->insert(array(
+		return $this->collection->insert(array(
 			'key' => $key,
 			'data' => $data['data']
 		));
 	}
 
-	public function delete (MongoCollection $collection, $key)
+	public function delete ($key)
 	{
-		return $collection->remove(array(
+		return $this->collection->remove(array(
 			'key' => $key
 		));
 	}
 
-	public function delete_group (MongoCollection $collection, $group)
+	public function delete_group ($group)
 	{
-		return $collection->remove(array(
+		return $this->collection->remove(array(
 			'key' => array(
 				'$regex' => $group . '\..*'
 			) 
