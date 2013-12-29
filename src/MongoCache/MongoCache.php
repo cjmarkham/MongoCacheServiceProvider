@@ -46,4 +46,10 @@ class MongoCache
 			) 
 		));
 	}
+
+	public function flush (Application $app, $connection = 'default', $database)
+	{
+		$database = $app['mongo'][$connection]->selectDB($database);
+		return $database->drop();
+	}
 }
