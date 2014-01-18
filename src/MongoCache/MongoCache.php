@@ -31,6 +31,30 @@ class MongoCache
 		));
 	}
 
+	public function append ($key, $data, \Closure $function = null)
+	{
+		$result = $this->collection->findOne(array(
+			'key' => $key
+		));
+
+		if (!$result['data'])
+		{
+			$result['data'] = array();
+		}
+
+		$result['data'][] = $data;
+		$this->collection->update(array(
+			'key' => $key
+		), array(
+			'key' => $key,
+			'data' => $result['data']
+		), array(
+			'upsert' => true
+		));
+
+		return $result;
+	}
+
 	public function delete ($key)
 	{
 		return $this->collection->remove(array(
