@@ -7,7 +7,13 @@ use Silex\Application;
 class MongoCache
 {
 	public $collection = null;
+	public $app;
 
+	public function setCollection ($database, $name)
+	{
+		return $this->app['mongo'][$database]->selectCollection($name);
+	}
+	
 	public function get ($key, \Closure $function = null)
 	{
 		$result = $this->collection->findOne(array(
