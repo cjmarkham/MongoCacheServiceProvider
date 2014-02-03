@@ -11,7 +11,7 @@ class MongoCache
 
 	public function setCollection ($database, $name)
 	{
-		return $this->app['mongo'][$database]->selectCollection($name);
+		return $this->app['mongo'][$database]->selectCollection($database, $name);
 	}
 	
 	public function get ($key, \Closure $function = null)
